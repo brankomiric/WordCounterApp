@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WordCounter.Server.Services;
+using WordCounter.Server.Services.Contracts;
 
 namespace WordCounter.Server.Controllers
 {
@@ -11,9 +13,16 @@ namespace WordCounter.Server.Controllers
     [Route("word_counter")]
     public class WordCounterController: ControllerBase
     {
+        private readonly IFileSystemService _fileSystemService;
+        private readonly IUserInputService _userInputService;
+        private readonly IDatabaseService _databaseService;
         private readonly ILogger _logger;
-        public WordCounterController(ILogger<WordCounterController> logger)
+        public WordCounterController(IFileSystemService fileSystemService, IUserInputService userInputService,
+                                     IDatabaseService databaseService, ILogger<WordCounterController> logger)
         {
+            _fileSystemService = fileSystemService;
+            _userInputService = userInputService;
+            _databaseService = databaseService;
             _logger = logger;
         }
 
