@@ -1,7 +1,9 @@
-﻿namespace WordCounter.Server.Services.Contracts
+﻿using System.Threading.Tasks;
+
+namespace WordCounter.Server.Services.Contracts
 {
     public interface IFileSystemService
     {
-        long ParseFile(string location);
+        Task<long> ParseFileAsync(string location);
     }
 }

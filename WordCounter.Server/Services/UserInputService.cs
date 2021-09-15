@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace WordCounter.Server.Services.Contracts
 {
-    public class UserInputService : IUserInputService
+    public class UserInputService : SimpleTextParser, IUserInputService
     {
-        public long ParseUserInput(string input)
+        public Task<long> ParseUserInputAsync(string input)
         {
-            throw new NotImplementedException();
+            return base.CountWords(input);
         }
     }
 }

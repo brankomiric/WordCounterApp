@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WordCounter.Server.DTOs;
 using WordCounter.Server.Services;
 using WordCounter.Server.Services.Contracts;
 
@@ -27,26 +29,40 @@ namespace WordCounter.Server.Controllers
         }
 
         [HttpPost("user_input")]
-        public async Task<IActionResult> UserInputHandler()
+        public async Task<IActionResult> UserInputHandler([FromBody] UserInputRequestDTO dto)
         {
-            _logger.LogWarning("this aint no golang!");
-            var map = new Dictionary<string, string>()
+            var wordCount = await _userInputService.ParseUserInputAsync(dto.UserInput);
+            var response = new ResponseDTO()
             {
-                { "key", "val1"}
+                IsSuccess = true,
+                Result = wordCount,
+                ErrorMessages = new List<string>()
             };
-            var task = Task.Run(() => map);
-            return Ok(await task);
+            return Ok(response);
         }
 
         [HttpPost("file_system")]
-        public async Task<IActionResult> FileSystemHandler()
+        public async Task<IActionResult> FileSystemHandler([FromBody] FileRequestDTO dto)
         {
-            var map = new Dictionary<string, string>()
+            var response = new ResponseDTO();
+            try
             {
-                { "key", "val2"}
-            };
-            var task = Task.Run(() => map);
-            return Ok(await task);
+                var wordCount = await _fileSystemService.ParseFileAsync(dto.FileLocation);
+                response.IsSuccess = true;
+                response.Result = wordCount;
+                response.ErrorMessages = new List<string>();
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Result = null;
+                var errors = new List<string>();
+                errors.Add(ex.Message);
+                response.ErrorMessages = errors;
+                return BadRequest(response);
+            }
+            
         }
 
         [HttpPost("database")]

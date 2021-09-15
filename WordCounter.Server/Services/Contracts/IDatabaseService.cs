@@ -1,10 +1,10 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using WordCounter.Server.DTOs;
 
 namespace WordCounter.Server.Services.Contracts
 {
     public interface IDatabaseService
     {
-        long ParseTextFromDatabase(StorageConfigDTO connectionParams);
+        Task<long> ParseTextFromDatabase(StorageConfigDTO connectionParams);
     }
 }

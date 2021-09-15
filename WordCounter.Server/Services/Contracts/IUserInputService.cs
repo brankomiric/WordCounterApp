@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+
 namespace WordCounter.Server.Services
 {
     public interface IUserInputService
     {
-        long ParseUserInput(string input);
+        Task<long> ParseUserInputAsync(string input);
     }
 }

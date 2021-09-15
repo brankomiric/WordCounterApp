@@ -7,9 +7,9 @@ using WordCounter.Server.Services.Contracts;
 
 namespace WordCounter.Server.Services
 {
-    public class DatabaseService : IDatabaseService
+    public class DatabaseService : SimpleTextParser, IDatabaseService
     {
-        public long ParseTextFromDatabase(StorageConfigDTO connectionParams)
+        public Task<long> ParseTextFromDatabase(StorageConfigDTO connectionParams)
         {
             throw new NotImplementedException();
         }
