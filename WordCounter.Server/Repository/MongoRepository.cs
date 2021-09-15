@@ -41,22 +41,7 @@ namespace WordCounter.Server.Repository
         public async Task<BsonDocument> GetRecordById(string document, string docId)
         {
             var collection = db.GetCollection<BsonDocument>(document);
-            FilterDefinition<BsonDocument> filter;
-
-            /*
-             * in cases where _id is a number and not a string
-             * the search would return no results.
-             * handling both cases here
-             */
-            int.TryParse(docId, out int docIdNum);
-            if (docIdNum != 0)
-            {
-                filter = Builders<BsonDocument>.Filter.Eq("_id", docIdNum);
-            } else
-            {
-                filter = Builders<BsonDocument>.Filter.Eq("_id", docId);
-            }
-
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", docId);
             return (await collection.FindAsync(filter)).FirstOrDefault();
         }
 
