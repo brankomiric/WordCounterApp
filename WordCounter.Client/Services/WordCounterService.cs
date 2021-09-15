@@ -41,7 +41,7 @@ namespace WordCounter.Client.Services
         public long ProcessFile()
         {
             Console.WriteLine("Please enter file location on the disk:");
-            string fileLoc = Console.ReadLine().Replace(@"\", "\\\\");
+            string fileLoc = Console.ReadLine().Replace(@"\", "\\");
             var reqBodyDto = new FileRequestDTO()
             {
                 Type = DTOs.Type.FILE,
