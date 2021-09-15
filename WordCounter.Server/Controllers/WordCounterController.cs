@@ -66,14 +66,26 @@ namespace WordCounter.Server.Controllers
         }
 
         [HttpPost("database")]
-        public async Task<IActionResult> DatabaseHandler()
+        public async Task<IActionResult> DatabaseHandler([FromBody] DatabaseSourceRequestDTO dto)
         {
-            var map = new Dictionary<string, string>()
+            var response = new ResponseDTO();
+            try
             {
-                { "key", "val3"}
-            };
-            var task = Task.Run(() => map);
-            return Ok(await task);
+                var wordCount = await _databaseService.ParseTextFromDatabaseAsync(dto.Config);
+                response.IsSuccess = true;
+                response.Result = wordCount;
+                response.ErrorMessages = new List<string>();
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Result = null;
+                var errors = new List<string>();
+                errors.Add(ex.Message);
+                response.ErrorMessages = errors;
+                return BadRequest(response);
+            }
         }
     }
 }

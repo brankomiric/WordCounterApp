@@ -9,5 +9,7 @@
         public string Password { get; set; }
         public string Table { get; set; }
         public string RecordId { get; set; }
+
+        public string ColumnName { get; set; }
     }
 }

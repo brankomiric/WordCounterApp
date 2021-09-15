@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WordCounter.Server.Repository;
 using WordCounter.Server.Services;
 using WordCounter.Server.Services.Contracts;
 
@@ -26,6 +27,7 @@ namespace WordCounter.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IMongoRepository, MongoRepository>();
             services.AddScoped<IFileSystemService, FileSystemService>();
             services.AddScoped<IUserInputService, UserInputService>();
             services.AddScoped<IDatabaseService, DatabaseService>();

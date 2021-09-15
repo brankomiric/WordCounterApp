@@ -25,7 +25,6 @@ namespace WordCounter.Client.Services
                 HttpRequestMessage message = new HttpRequestMessage();
                 message.Headers.Add("Accept", "application/json");
                 message.RequestUri = new Uri($"{baseUrl}/{url}");
-                Console.WriteLine($"{baseUrl}/{url}");
                 client.DefaultRequestHeaders.Clear();
                 if (body != null)
                 {

@@ -17,18 +17,20 @@ namespace WordCounter.Client.Services
         {
             Console.WriteLine("Please provide parameters for connecting to you Database (Only MongoDB is supported currently)");
             var configDto = new StorageConfigDTO();
-            Console.WriteLine("Database host url:");
+            Console.WriteLine("Database host (localhost e.g.):");
             configDto.HostUrl = Console.ReadLine();
             Console.WriteLine("Database name:");
             configDto.Database = Console.ReadLine();
-            Console.WriteLine("Username:");
+            Console.WriteLine("Username (hit Enter if none):");
             configDto.Username = Console.ReadLine();
-            Console.WriteLine("Password:");
+            Console.WriteLine("Password (hit Enter if none):");
             configDto.Password = Console.ReadLine();
             Console.WriteLine("Collection:");
             configDto.Table = Console.ReadLine();
             Console.WriteLine("Document id:");
             configDto.RecordId = Console.ReadLine();
+            Console.WriteLine("Collection field to parse:");
+            configDto.ColumnName = Console.ReadLine();
             var reqBodyDto = new DatabaseSourceRequestDTO()
             {
                 Type = DTOs.Type.DATABASE,
@@ -66,6 +68,10 @@ namespace WordCounter.Client.Services
 
         private ResponseDTO WaitTaskResult(string httpVerb, BaseRequestDTO body, string url)
         {
+            /*
+             * there's no need for a full async flow in a client app
+             * running no background tasks, so blocking for results here
+             */
             var task = Task.Run(() => _httpService.MakeRequest(httpVerb, body, url));
             task.Wait();
             return task.Result;

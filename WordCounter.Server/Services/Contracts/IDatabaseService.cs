@@ -5,6 +5,6 @@ namespace WordCounter.Server.Services.Contracts
 {
     public interface IDatabaseService
     {
-        Task<long> ParseTextFromDatabase(StorageConfigDTO connectionParams);
+        Task<long> ParseTextFromDatabaseAsync(StorageConfigDTO connectionParams);
     }
 }
