@@ -27,7 +27,7 @@ Create a database:
 Insert into collection:
 *db.word_counter_collection.insertOne({_id: "1234", sample_text: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit"})*
 
-# Reqest body for database option
+## Request body for database option
 ```json
 {
   "Config": {
