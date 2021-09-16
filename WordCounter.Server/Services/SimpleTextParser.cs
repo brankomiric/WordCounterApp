@@ -6,7 +6,11 @@ namespace WordCounter.Server.Services
     {
         protected Task<long> CountWords(string text)
         {
-            var words = text.Split(" ");
+            string[] words = new string[0];
+            if (!string.IsNullOrEmpty(text))
+            {
+                words = text.Split(" ");
+            }
             return Task.FromResult<long>(words.Length);
         }
     }

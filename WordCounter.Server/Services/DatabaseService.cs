@@ -24,7 +24,14 @@ namespace WordCounter.Server.Services
             _mongoRepository.InitConnection(@params.HostUrl, @params.Username,
                                             @params.Password, @params.Database);
             var record = await _mongoRepository.GetRecordById(@params.Table, @params.RecordId);
-            string value = record.GetValue(@params.ColumnName).AsString;
+            string value;
+            try
+            {
+                value = record.GetValue(@params.ColumnName).AsString;
+            }catch (NullReferenceException)
+            {
+                throw new Exception($"Record not found for id {@params.RecordId}");
+            }
             return await base.CountWords(value);
         }
     }
